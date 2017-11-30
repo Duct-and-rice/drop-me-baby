@@ -1,6 +1,6 @@
 <template lang="pug">
-    #wrapper
-        | a
+    md-content
+        md-button.md-raised a
 </template>
 
 <script>
