@@ -3,7 +3,6 @@ import axios from 'axios'
 
 import 'bootstrap'
 import 'bootswatch/dist/flatly/bootstrap.min.css'
-import 'animate.css/animate.min.css'
 
 import App from './App'
 import router from './router'

@@ -25,6 +25,7 @@ export default {
 <style scoped>
 .navbar {
     min-height: 0;
+    transition: min-height 1s cubic-bezier(0.6, -0.28, 0.74, 0.05);
 }
 .navbar.expanded {
     min-height: 100%;
