@@ -123,7 +123,12 @@ let rendererConfig = {
                 : false
         }),
         new webpack.HotModuleReplacementPlugin(),
-        new webpack.NoEmitOnErrorsPlugin()
+        new webpack.NoEmitOnErrorsPlugin(),
+        new webpack.ProvidePlugin({
+            '$': 'jquery/dist/jquery.slim.js',
+            'jQuery': 'jquery/dist/jquery.slim.js',
+            'Popper': 'popper.js/dist/umd/popper'
+        })
     ],
     output: {
         filename: '[name].js',

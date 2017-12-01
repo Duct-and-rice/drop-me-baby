@@ -1,17 +1,24 @@
 <template lang="pug">
-    md-content
-        md-button.md-raised a
+.container
+    expanded-navbar
 </template>
 
 <script>
-  export default {
-      name: 'index',
-      methods: {
-          open (link) {
-              this.$electron.shell.openExternal(link)
-          }
-      }
-  }
+export default {
+    name: 'index',
+    data: () => {
+        return {}
+    },
+    methods: {
+        open (link) {
+            this.$electron.shell.openExternal(link)
+        }
+    },
+    components: {
+        'expanded-navbar': require('./ExpandedNavbar').default
+    }
+}
 </script>
 
-<style></style>
+<style scoped>
+</style>
