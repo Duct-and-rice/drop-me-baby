@@ -1,10 +1,6 @@
-const files = require.context('.', false, /\.vue$/)
-const components = {}
-
-files.keys().map(key => files(key).default).forEach(component => {
-    if (component) {
+export function componentLoader (list) {
+    return (list.map(c => require('/' + c).default).reduce((components, component) => {
         components[component.name] = component
-    }
-})
-
-export default components
+        return components
+    }, {}))
+}

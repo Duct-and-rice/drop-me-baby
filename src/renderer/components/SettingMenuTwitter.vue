@@ -1,31 +1,50 @@
 <template lang="pug">
-.container-fluid
-    .navbar-brand Twitter
+setting-menu(title="Twitter")
+    form(:class="{'form-inline': !isExpanded}")
+        .form-group.mb-1.mr-1
+            label.text-light(:class="{'mr-sm-2': !isExpanded}" for="account") Account
+            select.form-control.custom-select#account(
+                v-model="selectedAccount"
+                v-if="isExpanded")
+                option(v-for="account of twitterAccounts" :value="account") {{ account.id }}
+            label.text-light(v-if="!isExpanded") : 
+                span.ml-1 @{{ selectedAccount }}
+
+        .form-group.mb-1.mr-1
+            label.text-light(:class="{'mr-sm-2': !isExpanded}" for="num") Images
+            input.form-control#num(
+                type="number"
+                v-model="imageNum"
+                v-if="isExpanded")
+            label.text-light(v-if="!isExpanded") : 
+                span.ml-1 {{ imageNum }}
 </template>
 
 <script>
+import {componentLoader} from '.'
+import {mapState} from 'vuex'
 export default {
     name: 'setting-menu-twitter',
+    props: {
+        isExpanded: Boolean
+    },
     mounted () {
-        this.initialHeight = this.$refs.navbar.offsetHeight
+        this.selectedAccount = this.twitterAccounts[0]
+    },
+    computed: {
+        ...mapState('twitter', {
+            twitterAccounts: state => state.accounts
+        })
     },
     data: () => {
         return {
-            isNavbarExpanded: true,
-            initialHeight: 0
+            imageNum: 4,
+            selectedAccount: ''
         }
     },
-    components: require('./index.js')
+    components: componentLoader(['SettingMenu'])
 }
 </script>
 
 <style scoped>
-.navbar {
-    min-height: 0;
-    transition: min-height 1s cubic-bezier(0.6, -0.28, 0.74, 0.05);
-}
-.navbar.expanded {
-    min-height: 100%;
-    transition: min-height 1s ease;
-}
 </style>

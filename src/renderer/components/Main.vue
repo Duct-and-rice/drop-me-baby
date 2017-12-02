@@ -4,9 +4,9 @@
 </template>
 
 <script>
-console.log(require('./index.js').default)
+import {componentLoader} from '.'
 export default {
-    name: 'index',
+    name: 'main',
     data: () => {
         return {}
     },
@@ -15,9 +15,7 @@ export default {
             this.$electron.shell.openExternal(link)
         }
     },
-    components: {
-        'expanded-navbar': require('./ExpandedNavbar').default
-    }
+    components: componentLoader(['ExpandedNavbar'])
 }
 </script>
 

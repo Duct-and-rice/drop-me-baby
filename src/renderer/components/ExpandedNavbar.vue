@@ -1,17 +1,21 @@
 <template lang="pug">
-.navbar.navbar-expand-lg.fixed-top.navbar-dark.p-0(
+.navbar.navbar-expand-lg.fixed-top.navbar-dark.p-0.bg-primary(
     :class="{expanded: isNavbarExpanded}",
-    @click="isNavbarExpanded=!isNavbarExpanded"
     ref="navbar")
     .container-fluid.align-self-stretch
+        .row-2.m-0.w-100
+            form.col.form-group.form-inline
+                input.form-control()
         .row.align-self-stretch.m-0.w-100
             .col.no-gutters.bg-primary
-                setting-menu-2ch
+                setting-menu-2ch(:is-expanded="isNavbarExpanded")
             .col.no-gutters.bg-dark
-                setting-menu-twitter
+                setting-menu-twitter(:is-expanded="isNavbarExpanded")
 </template>
 
 <script>
+import {componentLoader} from '.'
+import {mapState} from 'vuex'
 export default {
     name: 'expanded-navbar',
     mounted () {
@@ -19,11 +23,15 @@ export default {
     },
     data: () => {
         return {
-            isNavbarExpanded: true,
             initialHeight: 0
         }
     },
-    components: require('./index.js').default
+    computed: {
+        ...mapState('navbar', {
+            isNavbarExpanded: state => state.isExpanded
+        })
+    },
+    components: componentLoader(['SettingMenuTwitter', 'SettingMenu2ch'])
 }
 </script>
 
