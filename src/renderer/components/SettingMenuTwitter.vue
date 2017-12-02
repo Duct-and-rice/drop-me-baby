@@ -1,19 +1,11 @@
 <template lang="pug">
-.navbar.navbar-expand-lg.fixed-top.navbar-dark.p-0(
-    :class="{expanded: isNavbarExpanded}",
-    @click="isNavbarExpanded=!isNavbarExpanded"
-    ref="navbar")
-    .container-fluid.align-self-stretch
-        .row.align-self-stretch.m-0.w-100
-            .col.no-gutters.bg-primary
-                setting-menu-2ch
-            .col.no-gutters.bg-dark
-                setting-menu-twitter
+.container-fluid
+    .navbar-brand Twitter
 </template>
 
 <script>
 export default {
-    name: 'expanded-navbar',
+    name: 'setting-menu-twitter',
     mounted () {
         this.initialHeight = this.$refs.navbar.offsetHeight
     },
@@ -23,7 +15,7 @@ export default {
             initialHeight: 0
         }
     },
-    components: require('./index.js').default
+    components: require('./index.js')
 }
 </script>
 

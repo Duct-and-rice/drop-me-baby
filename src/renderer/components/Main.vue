@@ -4,6 +4,7 @@
 </template>
 
 <script>
+console.log(require('./index.js').default)
 export default {
     name: 'index',
     data: () => {
