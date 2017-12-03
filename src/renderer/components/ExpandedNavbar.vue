@@ -2,11 +2,11 @@
 .navbar.navbar-expand-lg.fixed-top.navbar-dark.p-0.bg-primary(
     :class="{expanded: isNavbarExpanded}",
     ref="navbar")
-    .container-fluid.align-self-stretch
-        .row-2.m-0.w-100
-            form.col.form-group.form-inline
-                input.form-control()
-        .row.align-self-stretch.m-0.w-100
+    .container-fluid.align-self-stretch.d-flex.flex-column.justify-content-start
+        .row.w-100
+            .col
+                file-browser
+        .row.align-self-stretch.m-0.w-100.flex-row
             .col.no-gutters.bg-primary
                 setting-menu-2ch(:is-expanded="isNavbarExpanded")
             .col.no-gutters.bg-dark
@@ -31,7 +31,10 @@ export default {
             isNavbarExpanded: state => state.isExpanded
         })
     },
-    components: componentLoader(['SettingMenuTwitter', 'SettingMenu2ch'])
+    components: componentLoader([
+        'SettingMenuTwitter',
+        'SettingMenu2ch',
+        'FileBrowser'])
 }
 </script>
 
