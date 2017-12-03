@@ -101,6 +101,10 @@ let rendererConfig = {
                         name: 'fonts/[name]--[folder].[ext]'
                     }
                 }
+            },
+            {
+                test: /\.ya?ml$/,
+                use: 'js-yaml-loader'
             }
         ]
     },
