@@ -4,24 +4,26 @@ setting-menu(title="2ch系掲示板")
         .form-group.mb-1.mr-1
             label.text-light(:class="{'mr-sm-2': !isExpanded}" for="account") BBS
             select.form-control.custom-select#account(
-                v-model="selectedBoard"
+                v-model="selectedBoardIndex"
+                @change="fetchThreads"
                 v-if="isExpanded")
-                option(v-for="board of boards" :value="board") {{ board.name }}
-                option(:value="{url:'', name:'Others', others:true}") Others...
+                option(v-for="(board, index) in bbsList" :value="index") {{ board.name }}
+                option(:value="'others'") Others...
             label.text-light(v-if="!isExpanded") :
                 span.ml-1(v-if="selectedBoard.name") {{ selectedBoard.name }}
 
         .form-group.mb-1.mr-1(v-if="!isOtherBoard")
             label.text-light(:class="{'mr-sm-2': !isExpanded}" for="num") Thread
             select.form-control.custom-select#account(
-                v-model="selectedThread"
+                v-model="selectedThreadIndex"
                 v-if="isExpanded")
-                option(v-for="(thread,i) in threads" :value="thread") {{ thread.title }}
+                option(v-for="(thread, index) in threads" :value="index") {{ thread.title }}
             label.text-light(v-if="!isExpanded") :
                 span.ml-1(v-if="selectedThread.title") {{ selectedThread.title }}
 </template>
 
 <script>
+import {mapState, mapMutations} from 'vuex'
 import {componentLoader} from '.'
 export default {
     name: 'setting-menu-2ch',
@@ -29,29 +31,47 @@ export default {
         isExpanded: Boolean
     },
     mounted () {
-        this.selectedBoard = this.boards[0]
+    },
+    methods: {
+        getBoardByIndex (index) {
+            return this.bbsList[index]
+        },
+        ...mapMutations('bbs', {
+            selectThread: 'SELECT_THREAD'
+        })
     },
     data: () => {
         return {
-            selectedBoard: {url: '', name: ''},
-            selectedThread: {url: '', title: ''},
-            boards: [
-                {url: 'yaruyomi', name: 'yaruyomi'}
-            ]
+            selectedBoardIndex: 0
         }
     },
     computed: {
         isOtherBoard () {
-            return this.selectedBoard['others'] !== undefined
+            return this.selectedBoard === 'others'
         },
         isExpandedAndOtherBoard () {
             return this.isExpanded && this.isOtherBoard
         },
+        fetchThreads () {
+            this.$store.dispatch('bbs/fetchThreads', this.selectedBoardIndex)
+        },
         threads () {
-            return Array.from({length: 100}, (v, k) => k).map(
-                i => ({url: 'http://' + i, title: i})
-            )
-        }
+            return this.selectedBoard.threads || []
+        },
+        selectedBoard () {
+            return this.bbsList[this.selectedBoardIndex]
+        },
+        selectedThreadIndex: {
+            get () {
+                return this.selectedBoard.threadIndex || 0
+            },
+            set (index) {
+                this.selectThread(index)
+            }
+        },
+        ...mapState('bbs', {
+            bbsList: 'bbsList'
+        })
     },
     components: componentLoader(['SettingMenu'])
 }
