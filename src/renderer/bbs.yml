@@ -1,0 +1,6 @@
+- name: 普通のやる夫板
+  subject_url: http://bbs.yaruyomi.com/ban/subject.txt
+  type: 2ch
+- name: やる夫系雑談・避難・投下板（やる夫板）
+  subject_url: http://jbbs.shitaraba.net/otaku/12368/subject.txt
+  type: shitaraba
